@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ContactManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ContactGroup">
+    <Key>
+      <PropertyRef Name="GroupId" />
+    </Key>
+    <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Contacts" Relationship="Self.FK_Contacts_ContactGroups" FromRole="ContactGroups" ToRole="Contacts" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactId" />
+    </Key>
+    <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupId" Type="Int32" />
+    <Property Name="ContactName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ContactGroup" Relationship="Self.FK_Contacts_ContactGroups" FromRole="Contacts" ToRole="ContactGroups" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Contacts_ContactGroups">
+    <End Role="ContactGroups" Type="Self.ContactGroup" Multiplicity="0..1" />
+    <End Role="Contacts" Type="Self.Contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContactGroups">
+        <PropertyRef Name="GroupId" />
+      </Principal>
+      <Dependent Role="Contacts">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ContactManagementEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ContactGroups" EntityType="Self.ContactGroup" />
+    <EntitySet Name="Contacts" EntityType="Self.Contact" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Contacts_ContactGroups" Association="Self.FK_Contacts_ContactGroups">
+      <End Role="ContactGroups" EntitySet="ContactGroups" />
+      <End Role="Contacts" EntitySet="Contacts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

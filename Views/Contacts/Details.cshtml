@@ -1,0 +1,42 @@
+﻿@model ContactManagement.Models.Contact
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactGroup.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactGroup.GroupName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ContactId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
